@@ -52,6 +52,7 @@ public class ImportService {
                         salary = Double.parseDouble(salaryStr);
                     } catch (NumberFormatException e) {
                         throw new InvalidDataException("Nieprawidłowa pensja: " + salaryStr);
+                        
                     }
                     if (salary <= 0) {
                         throw new InvalidDataException("Pensja musi być dodatnia");

@@ -30,13 +30,22 @@ public class EmployeeService {
         return employees.stream()
                 .collect(Collectors.groupingBy(
                         Employee::getCompanyName,
-                        Collectors.collectingAndThen(Collectors.toList(), list -> {
-                            int count = list.size();
-                            double avg = list.stream().mapToDouble(Employee::getSalary).average().orElse(0);
-                            Employee top = list.stream().max(Comparator.comparingDouble(Employee::getSalary)).orElse(null);
-                            String topName = (top != null) ? top.getFirstName() + " " + top.getLastName() : "";
-                            return new CompanyStatistics(count, avg, topName);
-                        })
+                        Collectors.collectingAndThen(
+                            Collectors.toList(), 
+                            list -> {
+                                int count = list.size();
+                                double avg = list.stream()
+                                    .mapToDouble(Employee::getSalary)
+                                    .average()
+                                    .orElse(0);
+                                Employee top = list.stream()
+                                    .max(Comparator.comparingDouble(Employee::getSalary))
+                                    .orElse(null);
+                                String topName = (top != null) 
+                                    ? top.getFirstName() + " " + top.getLastName() 
+                                    : "";
+                                return new CompanyStatistics(count, avg, topName);
+                            })
                 ));
     }
 }
